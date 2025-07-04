@@ -67,9 +67,14 @@ export default defineConfig({
         clientsClaim: true
       },
       includeAssets: [
-        'favicon.ico', 
+        'favicon.ico',
+        'favicon-16x16.png',
+        'favicon-32x32.png', 
+        'favicon-96x96.png',
         'offline.html',
-        'logo.png',
+        'apple-icon*.png',
+        'android-icon*.png',
+        'ms-icon*.png',
         'icon-maskable-*.png',
         'staff/*.png'
       ],
@@ -83,77 +88,121 @@ export default defineConfig({
         orientation: 'portrait-primary',
         scope: '/',
         start_url: '/',
-        categories: ['health', 'wellness', 'lifestyle'],
+        categories: ['health', 'wellness', 'lifestyle', 'medical'],
         lang: 'sv',
         icons: [
-          // ANY PURPOSE ICONS - Regular logo for standard use
+          // Standard favicon sizes
           {
-            src: '/logo.png',
+            src: '/favicon-16x16.png',
             sizes: '16x16',
             type: 'image/png',
             purpose: 'any'
           },
           {
-            src: '/logo.png',
+            src: '/favicon-32x32.png',
             sizes: '32x32',
             type: 'image/png',
             purpose: 'any'
           },
           {
-            src: '/logo.png',
+            src: '/favicon-96x96.png',
+            sizes: '96x96',
+            type: 'image/png',
+            purpose: 'any'
+          },
+          // Android Chrome icons
+          {
+            src: '/android-icon-36x36.png',
+            sizes: '36x36',
+            type: 'image/png',
+            purpose: 'any'
+          },
+          {
+            src: '/android-icon-48x48.png',
             sizes: '48x48',
             type: 'image/png',
             purpose: 'any'
           },
           {
-            src: '/logo.png',
+            src: '/android-icon-72x72.png',
             sizes: '72x72',
             type: 'image/png',
             purpose: 'any'
           },
           {
-            src: '/logo.png',
+            src: '/android-icon-96x96.png',
             sizes: '96x96',
             type: 'image/png',
             purpose: 'any'
           },
           {
-            src: '/logo.png',
-            sizes: '128x128',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: '/logo.png',
+            src: '/android-icon-144x144.png',
             sizes: '144x144',
             type: 'image/png',
             purpose: 'any'
           },
           {
-            src: '/logo.png',
+            src: '/android-icon-192x192.png',
+            sizes: '192x192',
+            type: 'image/png',
+            purpose: 'any'
+          },
+          // Apple Touch Icons
+          {
+            src: '/apple-icon-57x57.png',
+            sizes: '57x57',
+            type: 'image/png',
+            purpose: 'any'
+          },
+          {
+            src: '/apple-icon-60x60.png',
+            sizes: '60x60',
+            type: 'image/png',
+            purpose: 'any'
+          },
+          {
+            src: '/apple-icon-72x72.png',
+            sizes: '72x72',
+            type: 'image/png',
+            purpose: 'any'
+          },
+          {
+            src: '/apple-icon-76x76.png',
+            sizes: '76x76',
+            type: 'image/png',
+            purpose: 'any'
+          },
+          {
+            src: '/apple-icon-114x114.png',
+            sizes: '114x114',
+            type: 'image/png',
+            purpose: 'any'
+          },
+          {
+            src: '/apple-icon-120x120.png',
+            sizes: '120x120',
+            type: 'image/png',
+            purpose: 'any'
+          },
+          {
+            src: '/apple-icon-144x144.png',
+            sizes: '144x144',
+            type: 'image/png',
+            purpose: 'any'
+          },
+          {
+            src: '/apple-icon-152x152.png',
             sizes: '152x152',
             type: 'image/png',
             purpose: 'any'
           },
           {
-            src: '/logo.png',
-            sizes: '192x192',
+            src: '/apple-icon-180x180.png',
+            sizes: '180x180',
             type: 'image/png',
             purpose: 'any'
           },
-          {
-            src: '/logo.png',
-            sizes: '384x384',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: '/logo.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          // MASKABLE PURPOSE ICONS - Separate icons designed for adaptive/maskable use
+          // Maskable icons for adaptive icons
           {
             src: '/icon-maskable-96.png',
             sizes: '96x96',
@@ -205,7 +254,7 @@ export default defineConfig({
             url: '/',
             icons: [
               {
-                src: '/logo.png',
+                src: '/apple-icon-96x96.png',
                 sizes: '96x96',
                 type: 'image/png'
               }
@@ -218,13 +267,18 @@ export default defineConfig({
             url: '/om-oss',
             icons: [
               {
-                src: '/logo.png',
+                src: '/apple-icon-96x96.png',
                 sizes: '96x96',
                 type: 'image/png'
               }
             ]
           }
-        ]
+        ],
+        prefer_related_applications: false,
+        related_applications: [],
+        edge_side_panel: {
+          preferred_width: 400
+        }
       },
       devOptions: {
         enabled: false
