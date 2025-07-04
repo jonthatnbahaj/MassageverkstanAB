@@ -244,11 +244,11 @@ const BookingIframe: React.FC<BookingIframeProps> = ({ bookingUrl, serviceName, 
 
   return (
     <AnimatePresence>
-      {/* MAXIMUM Z-INDEX OVERLAY - PUSHED TO ABSOLUTE FRONT */}
+      {/* MAXIMUM Z-INDEX OVERLAY - iOS SAFARI COMPATIBLE - PUSHED TO ABSOLUTE FRONT */}
       <motion.div 
-        className="fixed inset-0 bg-black bg-opacity-50 flex flex-col"
+        className="fixed inset-0 bg-black bg-opacity-50 flex flex-col iframe-modal-overlay"
         style={{ 
-          zIndex: 999999999, // Maximum z-index to ensure it's at the very front
+          zIndex: 2147483647, // Maximum possible z-index value for iOS Safari
           position: 'fixed',
           top: 0,
           left: 0,
@@ -257,19 +257,27 @@ const BookingIframe: React.FC<BookingIframeProps> = ({ bookingUrl, serviceName, 
           width: '100vw',
           height: '100vh',
           maxWidth: '100vw',
-          maxHeight: '100vh'
+          maxHeight: '100vh',
+          // iOS Safari specific fixes
+          WebkitTransform: 'translateZ(0)',
+          transform: 'translateZ(0)',
+          isolation: 'isolate'
         }}
         variants={modalVariants}
         initial="hidden"
         animate="visible"
         exit="exit"
       >
-        {/* Minimized Header with Massageverkstan branding - MAXIMUM Z-INDEX */}
+        {/* Minimized Header with Massageverkstan branding - iOS SAFARI MAXIMUM Z-INDEX */}
         <motion.div 
           className="bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-primary text-white px-4 py-2 flex items-center justify-between shadow-lg relative h-12 flex-shrink-0"
           style={{ 
-            zIndex: 1000000000, // Even higher z-index for header
-            position: 'relative'
+            zIndex: 2147483647, // Maximum possible z-index for iOS Safari
+            position: 'relative',
+            // iOS Safari specific fixes
+            WebkitTransform: 'translateZ(1px)',
+            transform: 'translateZ(1px)',
+            isolation: 'isolate'
           }}
           variants={headerVariants}
         >
@@ -335,17 +343,21 @@ const BookingIframe: React.FC<BookingIframeProps> = ({ bookingUrl, serviceName, 
           </div>
         </motion.div>
 
-        {/* Full-Screen Content Area with enhanced animations - MAXIMUM Z-INDEX */}
+        {/* Full-Screen Content Area with enhanced animations - iOS SAFARI MAXIMUM Z-INDEX */}
         <motion.div 
           ref={containerRef}
-          className="flex-1 relative bg-white overflow-hidden iframe-container"
+          className="flex-1 relative bg-white overflow-hidden iframe-container ios-iframe-container"
           onTouchStart={handleTouchStart}
           style={{ 
             height: 'calc(100vh - 48px)',
             maxHeight: 'calc(100vh - 48px)',
             minHeight: 'calc(100vh - 48px)',
-            zIndex: 999999998, // High z-index for content area
-            position: 'relative'
+            zIndex: 2147483646, // High z-index for content area - iOS Safari compatible
+            position: 'relative',
+            // iOS Safari specific fixes
+            WebkitTransform: 'translateZ(0)',
+            transform: 'translateZ(0)',
+            isolation: 'isolate'
           }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -356,7 +368,12 @@ const BookingIframe: React.FC<BookingIframeProps> = ({ bookingUrl, serviceName, 
             {isLoading && (
               <motion.div 
                 className="absolute inset-0 flex items-center justify-center bg-white"
-                style={{ zIndex: 999999999 }} // Maximum z-index for loading state
+                style={{ 
+                  zIndex: 2147483647, // Maximum z-index for loading state - iOS Safari
+                  WebkitTransform: 'translateZ(2px)',
+                  transform: 'translateZ(2px)',
+                  isolation: 'isolate'
+                }}
                 variants={loadingVariants}
                 initial="hidden"
                 animate="visible"
@@ -401,7 +418,12 @@ const BookingIframe: React.FC<BookingIframeProps> = ({ bookingUrl, serviceName, 
             {!isOnline && (
               <motion.div 
                 className="absolute inset-0 flex items-center justify-center bg-white p-4"
-                style={{ zIndex: 999999999 }} // Maximum z-index for offline state
+                style={{ 
+                  zIndex: 2147483647, // Maximum z-index for offline state - iOS Safari
+                  WebkitTransform: 'translateZ(2px)',
+                  transform: 'translateZ(2px)',
+                  isolation: 'isolate'
+                }}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
@@ -452,7 +474,12 @@ const BookingIframe: React.FC<BookingIframeProps> = ({ bookingUrl, serviceName, 
             {hasError && isOnline && (
               <motion.div 
                 className="absolute inset-0 flex items-center justify-center bg-white p-4"
-                style={{ zIndex: 999999999 }} // Maximum z-index for error state
+                style={{ 
+                  zIndex: 2147483647, // Maximum z-index for error state - iOS Safari
+                  WebkitTransform: 'translateZ(2px)',
+                  transform: 'translateZ(2px)',
+                  isolation: 'isolate'
+                }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
@@ -506,21 +533,24 @@ const BookingIframe: React.FC<BookingIframeProps> = ({ bookingUrl, serviceName, 
             )}
           </AnimatePresence>
 
-          {/* Full-Screen Iframe with fade-in animation - MAXIMUM Z-INDEX */}
+          {/* Full-Screen Iframe with fade-in animation - iOS SAFARI MAXIMUM Z-INDEX */}
           {isOnline && (
             <motion.iframe
               ref={iframeRef}
               src={bookingUrl}
-              className="w-full border-0 bg-white block"
+              className="w-full border-0 bg-white block ios-safari-iframe"
               style={{ 
                 height: '100%',
                 minHeight: '100%',
                 maxHeight: '100%',
-                zIndex: 999999997, // High z-index for iframe
+                zIndex: 2147483645, // High z-index for iframe - iOS Safari compatible
                 position: 'relative',
                 // iOS Safari optimizations
                 WebkitOverflowScrolling: 'touch',
-                overflow: 'auto'
+                overflow: 'auto',
+                WebkitTransform: 'translateZ(0)',
+                transform: 'translateZ(0)',
+                isolation: 'isolate'
               }}
               // Enhanced security sandbox for iOS compatibility
               sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation"

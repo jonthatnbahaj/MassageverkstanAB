@@ -117,12 +117,17 @@ const MainPage: React.FC = () => {
       <AnimatePresence mode="wait">
         {activeTab === 'boka' && (
           <motion.div 
-            className="bg-brand-primary text-white py-4 px-4 shadow-lg sticky top-0 z-40 border-b border-brand-accent"
+            className="bg-brand-primary text-white py-4 px-4 shadow-lg sticky top-0 z-40 border-b border-brand-accent main-header"
             variants={headerVariants}
             initial="hidden"
             animate="visible"
             exit="hidden"
             key="header"
+            style={{
+              // Ensure header can be pushed behind iframe modal on iOS
+              position: 'sticky',
+              zIndex: 40
+            }}
           >
             <motion.div 
               className="max-w-4xl mx-auto flex items-center justify-center"

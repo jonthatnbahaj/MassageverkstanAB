@@ -136,10 +136,15 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
 
   return (
     <motion.div 
-      className="fixed bottom-0 left-0 right-0 z-50"
+      className="fixed bottom-0 left-0 right-0 z-50 bottom-navigation"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
+      style={{
+        // Ensure navigation can be pushed behind iframe modal on iOS
+        position: 'fixed',
+        zIndex: 50
+      }}
     >
       {/* Clean background */}
       <div className="relative">
