@@ -291,12 +291,16 @@ export default defineConfig({
             sizes: '512x512',
             type: 'image/png',
             purpose: 'maskable'
-          }
+          },
           {
             src: '/icon-maskable-1024.png',
             sizes: '1024x1024',
             type: 'image/png',
             purpose: 'maskable'
+          }
+        ],
+        shortcuts: [
+          {
             short_name: 'Om oss',
             description: 'Läs mer om Massageverkstan',
             url: '/om-oss',
