@@ -316,6 +316,7 @@
       ]
     },
     {
+    {
       "source": "/apple-touch-icon-*.png",
       "headers": [
         {
