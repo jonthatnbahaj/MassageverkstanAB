@@ -45,7 +45,7 @@
       "src": "/favicon-1024x1024.png",
       "sizes": "1024x1024",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "/android-icon-36x36.png",
@@ -180,22 +180,10 @@
       "purpose": "maskable"
     },
     {
-      "src": "/favicon-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/favicon-152x152.png",
-      "sizes": "152x152",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/favicon-1024x1024.png",
+      "src": "/icon-maskable-1024.png",
       "sizes": "1024x1024",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "maskable"
     }
   ],
   "shortcuts": [
@@ -230,5 +218,17 @@
   "related_applications": [],
   "edge_side_panel": {
     "preferred_width": 400
+  },
+  "display_override": ["window-controls-overlay", "standalone"],
+  "protocol_handlers": [],
+  "file_handlers": [],
+  "share_target": {
+    "action": "/",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
   }
 }
