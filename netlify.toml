@@ -97,9 +97,55 @@
     Cache-Control = "public, max-age=31536000, immutable"
     Content-Type = "image/png"
 
+# Specific Microsoft icon caching
+[[headers]]
+  for = "/ms-icon-70x70.png"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Content-Type = "image/png"
+
+[[headers]]
+  for = "/ms-icon-144x144.png"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Content-Type = "image/png"
+
+[[headers]]
+  for = "/ms-icon-150x150.png"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Content-Type = "image/png"
+
+[[headers]]
+  for = "/ms-icon-310x310.png"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Content-Type = "image/png"
+
 # Favicon caching
 [[headers]]
   for = "/favicon*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Content-Type = "image/png"
+
+# Apple icon caching
+[[headers]]
+  for = "/apple-icon*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Content-Type = "image/png"
+
+# Android icon caching
+[[headers]]
+  for = "/android-icon*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Content-Type = "image/png"
+
+# Apple icon precomposed caching
+[[headers]]
+  for = "/apple-icon-precomposed.png"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
     Content-Type = "image/png"
