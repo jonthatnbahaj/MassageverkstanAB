@@ -85,6 +85,35 @@ export default defineConfig({
         'apple-icon-144x144.png',
         'apple-icon-152x152.png',
         'apple-icon-180x180.png',
+        'apple-icon-1024x1024.png',
+        'apple-touch-icon.png',
+        'apple-touch-icon-precomposed.png',
+        'apple-touch-icon-57x57.png',
+        'apple-touch-icon-60x60.png',
+        'apple-touch-icon-72x72.png',
+        'apple-touch-icon-76x76.png',
+        'apple-touch-icon-114x114.png',
+        'apple-touch-icon-120x120.png',
+        'apple-touch-icon-144x144.png',
+        'apple-touch-icon-152x152.png',
+        'apple-touch-icon-180x180.png',
+        'apple-touch-icon-512x512.png',
+        'apple-touch-icon-1024x1024.png',
+        'apple-touch-icon-167x167.png',
+        'apple-touch-icon-83.5x83.5.png',
+        'apple-touch-icon-40x40.png',
+        'apple-touch-icon-80x80.png',
+        'apple-touch-icon-58x58.png',
+        'apple-touch-icon-87x87.png',
+        'apple-touch-icon-29x29.png',
+        'apple-touch-icon-20x20.png',
+        'apple-touch-icon-1024x1024@2x.png',
+        'apple-touch-icon-512x512@2x.png',
+        'apple-touch-icon-256x256.png',
+        'apple-touch-icon-128x128.png',
+        'apple-touch-icon-64x64.png',
+        'apple-touch-icon-32x32.png',
+        'apple-touch-icon-16x16.png',
         'android-icon-36x36.png',
         'android-icon-48x48.png',
         'android-icon-72x72.png',
@@ -107,7 +136,6 @@ export default defineConfig({
         'staff/*.png'
       ],
       manifest: {
-        id: 'massageverkstan-jonkoping-ab-pwa',
         name: 'Massageverkstan i Jönköping AB',
         short_name: 'Massageverkstan',
         description: 'Massageverkstan i Jönköping AB - Professionell massage och välmående. Boka din behandling online med Ingmar och Tobias.',
@@ -118,76 +146,7 @@ export default defineConfig({
         scope: '/',
         start_url: '/',
         lang: 'sv',
-        dir: 'ltr',
-        launch_handler: {
-          client_mode: 'navigate-existing'
-        },
-        handle_links: 'preferred',
-        edge_side_panel: {
-          preferred_width: 400
-        },
-        display_override: ["window-controls-overlay", "standalone", "minimal-ui"],
-        protocol_handlers: [
-          {
-            protocol: 'web+massage',
-            url: '/booking?service=%s'
-          },
-          {
-            protocol: 'mailto',
-            url: '/contact?email=%s'
-          }
-        ],
-        file_handlers: [
-          {
-            action: '/',
-            accept: {
-              'text/calendar': ['.ics'],
-              'application/pdf': ['.pdf'],
-              'text/vcard': ['.vcf'],
-              'application/vnd.ms-outlook': ['.msg']
-            },
-            icons: [
-              {
-                src: '/favicon-96x96.png',
-                sizes: '96x96',
-                type: 'image/png'
-              }
-            ],
-            launch_type: 'single-client'
-          }
-        ],
-        screenshots: [
-          {
-            src: '/apple-icon-180x180.png',
-            sizes: '180x180',
-            type: 'image/png',
-            form_factor: 'narrow',
-            label: 'Massageverkstan mobile booking interface - Book massage appointments with Ingmar and Tobias'
-          },
-          {
-            src: '/favicon-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            form_factor: 'wide',
-            label: 'Massageverkstan desktop view - Professional massage services in Jönköping'
-          },
-          {
-            src: '/apple-icon-152x152.png',
-            sizes: '152x152',
-            type: 'image/png',
-            form_factor: 'narrow',
-            label: 'Massageverkstan therapist profiles - Meet our certified massage therapists'
-          },
-          {
-            src: '/favicon-1024x1024.png',
-            sizes: '1024x1024',
-            type: 'image/png',
-            form_factor: 'wide',
-            label: 'Massageverkstan services overview - Professional massage and wellness treatments'
-          }
-        ],
         categories: ['health', 'wellness', 'lifestyle', 'medical', 'business'],
-        iarc_rating_id: 'e84b072d-71b3-4d3e-86ae-31a8ce4e53b7',
         icons: [
           // Standard favicon sizes
           {
@@ -337,6 +296,12 @@ export default defineConfig({
             type: 'image/png',
             purpose: 'any'
           },
+          {
+            src: '/apple-icon-1024x1024.png',
+            sizes: '1024x1024',
+            type: 'image/png',
+            purpose: 'any'
+          },
           // Microsoft Icons
           {
             src: '/ms-icon-70x70.png',
@@ -414,36 +379,23 @@ export default defineConfig({
         ],
         shortcuts: [
           {
-            name: 'Boka tid',
+            name: 'Boka behandling',
+            short_name: 'Boka',
+            description: 'Boka din behandling hos Massageverkstan',
+            url: '/',
+            icons: [
+              {
+                src: '/apple-icon-96x96.png',
+                sizes: '96x96',
+                type: 'image/png'
+              }
+            ]
+          },
+          {
+            name: 'Om oss', 
             short_name: 'Om oss',
-            description: 'Läs mer om Massageverkstan och våra terapeuter',
-            url: '/?tab=boka',
-            icons: [
-              {
-                src: '/apple-icon-96x96.png',
-                sizes: '96x96',
-                type: 'image/png'
-              }
-            ]
-          },
-          {
-            name: 'Kontakt',
-            short_name: 'Kontakt',
-            description: 'Kontakta Massageverkstan för frågor',
-            url: '/?tab=info',
-            icons: [
-              {
-                src: '/apple-icon-96x96.png',
-                sizes: '96x96',
-                type: 'image/png'
-              }
-            ]
-          },
-          {
-            name: 'Ring oss',
-            short_name: 'Ring',
-            description: 'Ring Massageverkstan direkt',
-            url: 'tel:0709934893',
+            description: 'Läs mer om Massageverkstan',
+            url: '/om-oss',
             icons: [
               {
                 src: '/apple-icon-96x96.png',
@@ -454,22 +406,21 @@ export default defineConfig({
           }
         ],
         prefer_related_applications: false,
-        related_applications: [
-          {
-            platform: 'webapp',
-            url: 'https://massageverkstan.netlify.app/manifest.json'
-          }
-        ],
+        related_applications: [],
+        display_override: ["window-controls-overlay", "standalone"],
+        protocol_handlers: [],
         file_handlers: [],
         share_target: {
           action: "/",
           method: "GET",
-          enctype: "application/x-www-form-urlencoded",
           params: {
             title: "title",
             text: "text",
             url: "url"
           }
+        },
+        edge_side_panel: {
+          preferred_width: 400
         }
       },
       devOptions: {
