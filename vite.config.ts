@@ -301,6 +301,7 @@ export default defineConfig({
         ],
         shortcuts: [
           {
+           name: 'Om oss',
             short_name: 'Om oss',
             description: 'Läs mer om Massageverkstan',
             url: '/om-oss',
