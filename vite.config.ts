@@ -71,6 +71,9 @@ export default defineConfig({
         'favicon-16x16.png',
         'favicon-32x32.png', 
         'favicon-96x96.png',
+        'favicon-152x152.png',
+        'favicon-512x512.png',
+        'favicon-1024x1024.png',
         'offline.html',
         'apple-icon*.png',
         'android-icon*.png',
@@ -107,6 +110,24 @@ export default defineConfig({
           {
             src: '/favicon-96x96.png',
             sizes: '96x96',
+            type: 'image/png',
+            purpose: 'any'
+          },
+          {
+            src: '/favicon-152x152.png',
+            sizes: '152x152',
+            type: 'image/png',
+            purpose: 'any'
+          },
+          {
+            src: '/favicon-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any'
+          },
+          {
+            src: '/favicon-1024x1024.png',
+            sizes: '1024x1024',
             type: 'image/png',
             purpose: 'any'
           },
