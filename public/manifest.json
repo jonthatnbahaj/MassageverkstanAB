@@ -1,7 +1,7 @@
 {
   "name": "Massageverkstan i Jönköping AB",
   "short_name": "Massageverkstan",
-  "description": "Massageverkstan i Jönköping AB - Professionell massage och välmående. Boka din behandling online.",
+  "description": "Massageverkstan i Jönköping AB - Professionell massage och välmående. Boka din behandling online med Ingmar och Tobias.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -10,6 +10,7 @@
   "background_color": "#2D5A4F",
   "lang": "sv",
   "categories": ["health", "wellness", "lifestyle", "medical"],
+  "id": "massageverkstan-jonkoping-ab-pwa",
   "icons": [
     {
       "src": "/favicon-16x16.png",
@@ -134,12 +135,6 @@
     {
       "src": "/apple-icon-180x180.png",
       "sizes": "180x180",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/apple-icon-152x152.png",
-      "sizes": "152x152",
       "type": "image/png",
       "purpose": "any"
     },
