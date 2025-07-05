@@ -1,6 +1,14 @@
-// Barberaria 96 Service Worker - Production Ready
-const CACHE_NAME = 'barberaria-96-v1.0.1';
+// Massageverkstan Service Worker - Production Ready PWA
+const CACHE_NAME = 'massageverkstan-pwa-v1.0.2';
 const OFFLINE_URL = '/offline.html';
+const APP_SHELL = [
+  '/',
+  '/index.html',
+  '/offline.html',
+  '/manifest.json',
+  '/favicon-192x192.png',
+  '/favicon-512x512.png'
+];
 
 // Precache manifest placeholder - required for vite-plugin-pwa injectManifest strategy
 self.__WB_MANIFEST;
@@ -12,8 +20,8 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
-        console.log('Caching offline page...');
-        return cache.add(OFFLINE_URL);
+        console.log('Caching app shell and offline page...');
+        return cache.addAll([OFFLINE_URL, ...APP_SHELL]);
       })
       .then(() => {
         // Force activation immediately
@@ -81,7 +89,9 @@ self.addEventListener('fetch', (event) => {
             '/integritetspolicy',
             '/anvandarvillkor',
             '/privacy',
-            '/terms'
+            '/terms',
+            '/contact',
+            '/booking'
           ];
           
           // If it's a React route, serve the main app
@@ -106,6 +116,7 @@ self.addEventListener('fetch', (event) => {
             const responseToCache = response.clone();
             caches.open(CACHE_NAME)
               .then((cache) => {
+                // Cache with expiration
                 cache.put(event.request, responseToCache);
               });
           }
@@ -127,6 +138,7 @@ self.addEventListener('fetch', (event) => {
       event.request.destination === 'style' || 
       event.request.destination === 'script' ||
       event.request.destination === 'font' ||
+      event.request.destination === 'manifest' ||
       event.request.url.includes('fonts.googleapis.com') ||
       event.request.url.includes('fonts.gstatic.com')) {
     
@@ -190,9 +202,37 @@ self.addEventListener('fetch', (event) => {
 self.addEventListener('sync', (event) => {
   if (event.tag === 'background-sync') {
     event.waitUntil(
-      console.log('Background sync triggered')
+      console.log('Massageverkstan background sync triggered')
     );
   }
+});
+
+// Handle push notifications (if needed in future)
+self.addEventListener('push', (event) => {
+  if (event.data) {
+    const data = event.data.json();
+    const options = {
+      body: data.body,
+      icon: '/favicon-192x192.png',
+      badge: '/favicon-96x96.png',
+      tag: 'massageverkstan-notification',
+      requireInteraction: false,
+      silent: false
+    };
+    
+    event.waitUntil(
+      self.registration.showNotification(data.title, options)
+    );
+  }
+});
+
+// Handle notification clicks
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  
+  event.waitUntil(
+    clients.openWindow('/')
+  );
 });
 
 // IMPORTANT: NO push notification handlers to prevent any popups
