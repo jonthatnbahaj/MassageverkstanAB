@@ -414,7 +414,7 @@ export default defineConfig({
         ],
         shortcuts: [
           {
-           name: 'Om oss',
+            name: 'Boka tid',
             short_name: 'Om oss',
             description: 'Läs mer om Massageverkstan och våra terapeuter',
             url: '/?tab=boka',
@@ -470,9 +470,6 @@ export default defineConfig({
             text: "text",
             url: "url"
           }
-        },
-        note_taking: {
-          new_note_url: "/contact?note=true"
         }
       },
       devOptions: {
