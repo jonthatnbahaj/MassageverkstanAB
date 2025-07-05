@@ -74,6 +74,27 @@ export default defineConfig({
         'favicon-152x152.png',
         'favicon-512x512.png',
         'favicon-1024x1024.png',
+        'apple-icon.png',
+        'apple-icon-precomposed.png',
+        'apple-icon-57x57.png',
+        'apple-icon-60x60.png',
+        'apple-icon-72x72.png',
+        'apple-icon-76x76.png',
+        'apple-icon-114x114.png',
+        'apple-icon-120x120.png',
+        'apple-icon-144x144.png',
+        'apple-icon-152x152.png',
+        'apple-icon-180x180.png',
+        'android-icon-36x36.png',
+        'android-icon-48x48.png',
+        'android-icon-72x72.png',
+        'android-icon-96x96.png',
+        'android-icon-144x144.png',
+        'android-icon-192x192.png',
+        'ms-icon-70x70.png',
+        'ms-icon-144x144.png',
+        'ms-icon-150x150.png',
+        'ms-icon-310x310.png',
         'offline.html',
         'icon-maskable-96.png',
         'icon-maskable-128.png',
@@ -83,9 +104,6 @@ export default defineConfig({
         'icon-maskable-384.png',
         'icon-maskable-512.png', 
         'icon-maskable-1024.png',
-        'apple-icon*.png',
-        'android-icon*.png',
-        'ms-icon*.png',
         'staff/*.png'
       ],
       manifest: {
@@ -246,6 +264,31 @@ export default defineConfig({
           {
             src: '/apple-icon-180x180.png',
             sizes: '180x180',
+            type: 'image/png',
+            purpose: 'any'
+          },
+          // Microsoft Icons
+          {
+            src: '/ms-icon-70x70.png',
+            sizes: '70x70',
+            type: 'image/png',
+            purpose: 'any'
+          },
+          {
+            src: '/ms-icon-144x144.png',
+            sizes: '144x144',
+            type: 'image/png',
+            purpose: 'any'
+          },
+          {
+            src: '/ms-icon-150x150.png',
+            sizes: '150x150',
+            type: 'image/png',
+            purpose: 'any'
+          },
+          {
+            src: '/ms-icon-310x310.png',
+            sizes: '310x310',
             type: 'image/png',
             purpose: 'any'
           },
