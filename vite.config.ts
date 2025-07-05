@@ -75,6 +75,9 @@ export default defineConfig({
         'favicon-512x512.png',
         'favicon-1024x1024.png',
         'offline.html',
+        'icon-maskable-152.png',
+        'icon-maskable-512.png', 
+        'icon-maskable-1024.png',
         'apple-icon*.png',
         'android-icon*.png',
         'ms-icon*.png',
@@ -130,6 +133,25 @@ export default defineConfig({
             sizes: '1024x1024',
             type: 'image/png',
             purpose: 'any'
+          },
+          // Enhanced maskable icons for Apple Store compliance
+          {
+            src: '/favicon-152x152.png',
+            sizes: '152x152',
+            type: 'image/png',
+            purpose: 'maskable'
+          },
+          {
+            src: '/favicon-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable'
+          },
+          {
+            src: '/favicon-1024x1024.png',
+            sizes: '1024x1024',
+            type: 'image/png',
+            purpose: 'maskable'
           },
           // Android Chrome icons
           {
