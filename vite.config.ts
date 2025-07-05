@@ -107,6 +107,7 @@ export default defineConfig({
         'staff/*.png'
       ],
       manifest: {
+        id: 'massageverkstan-jonkoping-ab-pwa',
         name: 'Massageverkstan i Jönköping AB',
         short_name: 'Massageverkstan',
         description: 'Massageverkstan i Jönköping AB - Professionell massage och välmående. Boka din behandling online.',
@@ -116,6 +117,35 @@ export default defineConfig({
         orientation: 'portrait-primary',
         scope: '/',
         start_url: '/',
+        launch_handler: {
+          client_mode: 'navigate-existing'
+        },
+        handle_links: 'preferred',
+        file_handlers: [
+          {
+            action: '/',
+            accept: {
+              'text/calendar': ['.ics'],
+              'application/pdf': ['.pdf']
+            }
+          }
+        ],
+        screenshots: [
+          {
+            src: '/apple-icon-180x180.png',
+            sizes: '180x180',
+            type: 'image/png',
+            form_factor: 'narrow',
+            label: 'Massageverkstan booking interface'
+          },
+          {
+            src: '/favicon-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            form_factor: 'wide',
+            label: 'Massageverkstan desktop view'
+          }
+        ],
         categories: ['health', 'wellness', 'lifestyle', 'medical'],
         lang: 'sv',
         icons: [
