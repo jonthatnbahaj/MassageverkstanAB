@@ -460,7 +460,6 @@ export default defineConfig({
             url: 'https://massageverkstan.netlify.app/manifest.json'
           }
         ],
-        file_handlers: [],
         share_target: {
           action: "/",
           method: "GET",
