@@ -143,7 +143,11 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
       style={{
         // Ensure navigation can be pushed behind iframe modal on iOS
         position: 'fixed',
-        zIndex: 50
+        zIndex: 50,
+        // Add transform for stacking context
+        WebkitTransform: 'translateZ(0)',
+        transform: 'translateZ(0)',
+        isolation: 'isolate'
       }}
     >
       {/* Clean background */}

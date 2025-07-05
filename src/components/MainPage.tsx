@@ -126,7 +126,11 @@ const MainPage: React.FC = () => {
             style={{
               // Ensure header can be pushed behind iframe modal on iOS
               position: 'sticky',
-              zIndex: 40
+              zIndex: 40,
+              // Add transform for stacking context
+              WebkitTransform: 'translateZ(0)',
+              transform: 'translateZ(0)',
+              isolation: 'isolate'
             }}
           >
             <motion.div 
