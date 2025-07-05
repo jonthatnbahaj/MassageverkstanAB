@@ -75,13 +75,17 @@ export default defineConfig({
         'favicon-512x512.png',
         'favicon-1024x1024.png',
         'offline.html',
+        'icon-maskable-96.png',
+        'icon-maskable-128.png',
+        'icon-maskable-144.png',
         'icon-maskable-152.png',
+        'icon-maskable-192.png',
+        'icon-maskable-384.png',
         'icon-maskable-512.png', 
         'icon-maskable-1024.png',
         'apple-icon*.png',
         'android-icon*.png',
         'ms-icon*.png',
-        'icon-maskable-*.png',
         'staff/*.png'
       ],
       manifest: {
@@ -151,7 +155,7 @@ export default defineConfig({
             src: '/favicon-1024x1024.png',
             sizes: '1024x1024',
             type: 'image/png',
-            purpose: 'maskable'
+            purpose: 'any'
           },
           // Android Chrome icons
           {
@@ -287,24 +291,16 @@ export default defineConfig({
             sizes: '512x512',
             type: 'image/png',
             purpose: 'maskable'
+          },
+          {
+            src: '/icon-maskable-1024.png',
+            sizes: '1024x1024',
+            type: 'image/png',
+            purpose: 'maskable'
           }
         ],
         shortcuts: [
           {
-            name: 'Boka behandling',
-            short_name: 'Boka',
-            description: 'Boka din behandling hos Massageverkstan',
-            url: '/',
-            icons: [
-              {
-                src: '/apple-icon-96x96.png',
-                sizes: '96x96',
-                type: 'image/png'
-              }
-            ]
-          },
-          {
-            name: 'Om oss',
             short_name: 'Om oss',
             description: 'Läs mer om Massageverkstan',
             url: '/om-oss',
@@ -319,6 +315,18 @@ export default defineConfig({
         ],
         prefer_related_applications: false,
         related_applications: [],
+        display_override: ["window-controls-overlay", "standalone"],
+        protocol_handlers: [],
+        file_handlers: [],
+        share_target: {
+          action: "/",
+          method: "GET",
+          params: {
+            title: "title",
+            text: "text",
+            url: "url"
+          }
+        },
         edge_side_panel: {
           preferred_width: 400
         }
