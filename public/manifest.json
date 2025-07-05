@@ -84,6 +84,18 @@
       "purpose": "any"
     },
     {
+      "src": "/apple-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-icon-precomposed.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
       "src": "/apple-icon-57x57.png",
       "sizes": "57x57",
       "type": "image/png",
