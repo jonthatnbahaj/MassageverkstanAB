@@ -85,6 +85,7 @@ export default defineConfig({
         'apple-icon-144x144.png',
         'apple-icon-152x152.png',
         'apple-icon-180x180.png',
+        'apple-icon-1024x1024.png',
         'android-icon-36x36.png',
         'android-icon-48x48.png',
         'android-icon-72x72.png',
@@ -264,6 +265,12 @@ export default defineConfig({
           {
             src: '/apple-icon-180x180.png',
             sizes: '180x180',
+            type: 'image/png',
+            purpose: 'any'
+          },
+          {
+            src: '/apple-icon-1024x1024.png',
+            sizes: '1024x1024',
             type: 'image/png',
             purpose: 'any'
           },
