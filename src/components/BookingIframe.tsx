@@ -261,12 +261,18 @@ const BookingIframe: React.FC<BookingIframeProps> = ({ bookingUrl, serviceName, 
           // iOS Safari specific fixes
           WebkitTransform: 'translateZ(0)',
           transform: 'translateZ(0)',
-          isolation: 'isolate'
+          isolation: 'isolate',
+          // Ensure it's above everything
+          pointerEvents: 'auto',
+          // Create new stacking context
+          contain: 'layout style paint'
         }}
         variants={modalVariants}
         initial="hidden"
         animate="visible"
         exit="exit"
+        onTouchStart={(e) => e.stopPropagation()}
+        onTouchMove={(e) => e.stopPropagation()}
       >
         {/* Minimized Header with Massageverkstan branding - iOS SAFARI MAXIMUM Z-INDEX */}
         <motion.div 

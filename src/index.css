@@ -19,6 +19,32 @@ body.iframe-modal-open {
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
   isolation: isolate;
+  /* Force all child elements behind iframe modal */
+  pointer-events: none;
+}
+
+/* Re-enable pointer events for iframe modal only */
+body.iframe-modal-open .iframe-modal-overlay {
+  pointer-events: auto !important;
+}
+
+/* Force header and navigation behind iframe modal on ALL devices */
+body.iframe-modal-open header,
+body.iframe-modal-open nav,
+body.iframe-modal-open [role="banner"],
+body.iframe-modal-open [role="navigation"],
+body.iframe-modal-open .header,
+body.iframe-modal-open .navigation,
+body.iframe-modal-open .nav,
+body.iframe-modal-open .top-bar,
+body.iframe-modal-open .app-bar,
+body.iframe-modal-open .main-header,
+body.iframe-modal-open .bottom-navigation {
+  z-index: 1 !important;
+  position: relative !important;
+  -webkit-transform: translateZ(-10px) !important;
+  transform: translateZ(-10px) !important;
+  pointer-events: none !important;
 }
 
 /* iOS Safari specific iframe modal overlay - FORCE TO FRONT */
@@ -37,6 +63,10 @@ body.iframe-modal-open {
   bottom: 0 !important;
   width: 100vw !important;
   height: 100vh !important;
+  /* Ensure it's above everything */
+  pointer-events: auto !important;
+  /* Create new stacking context */
+  contain: layout style paint !important;
 }
 
 /* iOS Safari iframe container optimizations */
@@ -174,6 +204,28 @@ body.iframe-modal-open {
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     will-change: transform;
+  }
+  
+  /* iOS Safari specific - force all other elements behind modal */
+  body.iframe-modal-open * {
+    /* Reset z-index for all elements when modal is open */
+    z-index: auto !important;
+  }
+  
+  /* Except for iframe modal elements */
+  body.iframe-modal-open .iframe-modal-overlay,
+  body.iframe-modal-open .iframe-modal-overlay *,
+  body.iframe-modal-open .iframe-container,
+  body.iframe-modal-open .iframe-container *,
+  body.iframe-modal-open .ios-iframe-container,
+  body.iframe-modal-open .ios-iframe-container *,
+  body.iframe-modal-open .ios-safari-iframe {
+    z-index: 2147483647 !important;
+    -webkit-transform: translateZ(20px) !important;
+    transform: translateZ(20px) !important;
+    isolation: isolate !important;
+    position: relative !important;
+    pointer-events: auto !important;
   }
 }
 
@@ -480,6 +532,7 @@ iframe[title] {
   body.iframe-modal-open * {
     /* Reset z-index for all elements when modal is open */
     z-index: auto !important;
+    pointer-events: none !important;
   }
   
   /* Except for iframe modal elements */
@@ -491,10 +544,11 @@ iframe[title] {
   body.iframe-modal-open .ios-iframe-container *,
   body.iframe-modal-open .ios-safari-iframe {
     z-index: 2147483647 !important;
-    -webkit-transform: translateZ(10px) !important;
-    transform: translateZ(10px) !important;
+    -webkit-transform: translateZ(30px) !important;
+    transform: translateZ(30px) !important;
     isolation: isolate !important;
     position: relative !important;
+    pointer-events: auto !important;
   }
   
   /* Force header and navigation behind modal on iOS */
@@ -506,9 +560,83 @@ iframe[title] {
   body.iframe-modal-open .navigation,
   body.iframe-modal-open .nav,
   body.iframe-modal-open .top-bar,
-  body.iframe-modal-open .app-bar {
+  body.iframe-modal-open .app-bar,
+  body.iframe-modal-open .main-header,
+  body.iframe-modal-open .bottom-navigation {
     z-index: 1 !important;
-    -webkit-transform: translateZ(-1px) !important;
-    transform: translateZ(-1px) !important;
+    -webkit-transform: translateZ(-20px) !important;
+    transform: translateZ(-20px) !important;
+    pointer-events: none !important;
+    position: relative !important;
+  }
+}
+
+/* Additional iPad specific optimizations */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  /* iPad specific */
+  body.iframe-modal-open {
+    /* Ensure full coverage on iPad */
+    width: 100vw !important;
+    height: 100vh !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+  }
+  
+  .iframe-modal-overlay {
+    /* iPad specific overlay */
+    width: 100vw !important;
+    height: 100vh !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    z-index: 2147483647 !important;
+  }
+}
+
+/* iPhone specific optimizations */
+@media screen and (max-width: 767px) {
+  /* iPhone specific */
+  body.iframe-modal-open {
+    /* Ensure full coverage on iPhone */
+    width: 100vw !important;
+    height: 100vh !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    /* Prevent any potential scrolling */
+    overflow: hidden !important;
+    overscroll-behavior: none !important;
+  }
+  
+  .iframe-modal-overlay {
+    /* iPhone specific overlay */
+    width: 100vw !important;
+    height: 100vh !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    z-index: 2147483647 !important;
+    /* Prevent any gaps */
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  /* Force header and navigation completely behind on iPhone */
+  body.iframe-modal-open .main-header,
+  body.iframe-modal-open .bottom-navigation {
+    z-index: -1 !important;
+    -webkit-transform: translateZ(-30px) !important;
+    transform: translateZ(-30px) !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
   }
 }
