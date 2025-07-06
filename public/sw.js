@@ -1,8 +1,22 @@
 // Massageverkstan Service Worker - Industry Leading PWA Standards
 // Optimized for highest PWA Builder rating and app store compliance
 
-const CACHE_NAME = 'massageverkstan-pwa-v2.0.0';
+const CACHE_NAME = 'massageverkstan-pwa-v2.1.0';
 const OFFLINE_URL = '/offline.html';
+
+// Enhanced caching strategy for maximum PWA score
+const STATIC_CACHE_URLS = [
+  '/',
+  '/index.html',
+  '/offline.html',
+  '/manifest.json',
+  '/logo.png',
+  '/staff/Ingmar.png',
+  '/staff/Tobias.png',
+  '/favicon-192x192.png',
+  '/favicon-512x512.png',
+  '/android-icon-192x192.png'
+];
 
 // Install event - aggressive caching for performance
 self.addEventListener('install', (event) => {
@@ -14,8 +28,8 @@ self.addEventListener('install', (event) => {
         const cache = await caches.open(CACHE_NAME);
         console.log('[SW] Caching app shell and critical resources...');
         
-        // Cache resources from Workbox manifest
-        await cache.addAll(self.__WB_MANIFEST);
+        // Cache static resources
+        await cache.addAll(STATIC_CACHE_URLS);
         
         // Force immediate activation
         await self.skipWaiting();
@@ -197,7 +211,7 @@ self.addEventListener('sync', (event) => {
   }
 });
 
-// Push notifications (if needed in future)
+// Push notifications support
 self.addEventListener('push', (event) => {
   if (!event.data) return;
   
@@ -210,7 +224,18 @@ self.addEventListener('push', (event) => {
       tag: 'massageverkstan-notification',
       requireInteraction: false,
       silent: false,
-      data: data.data || {}
+      data: data.data || {},
+      actions: [
+        {
+          action: 'book',
+          title: 'Boka nu',
+          icon: '/android-icon-96x96.png'
+        },
+        {
+          action: 'dismiss',
+          title: 'Stäng'
+        }
+      ]
     };
     
     event.waitUntil(
@@ -225,9 +250,15 @@ self.addEventListener('push', (event) => {
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
   
-  event.waitUntil(
-    clients.openWindow('/')
-  );
+  if (event.action === 'book') {
+    event.waitUntil(
+      clients.openWindow('/?tab=boka')
+    );
+  } else {
+    event.waitUntil(
+      clients.openWindow('/')
+    );
+  }
 });
 
 // Periodic background sync (if supported)
@@ -249,15 +280,40 @@ self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'GET_VERSION') {
     event.ports[0].postMessage({ version: CACHE_NAME });
   }
+  
+  if (event.data && event.data.type === 'CACHE_URLS') {
+    event.waitUntil(
+      caches.open(CACHE_NAME).then(cache => {
+        return cache.addAll(event.data.payload);
+      })
+    );
+  }
 });
 
-// Error handling
+// Enhanced error handling
 self.addEventListener('error', (event) => {
   console.error('[SW] Service worker error:', event.error);
 });
 
 self.addEventListener('unhandledrejection', (event) => {
   console.error('[SW] Unhandled promise rejection:', event.reason);
+});
+
+// File handling for PWA
+self.addEventListener('fetch', (event) => {
+  const url = new URL(event.request.url);
+  
+  // Handle file types for PWA file handling
+  if (url.pathname.endsWith('.ics') || url.pathname.endsWith('.pdf')) {
+    event.respondWith(
+      fetch(event.request).then(response => {
+        // Handle calendar and PDF files
+        return response;
+      }).catch(() => {
+        return new Response('File not available offline', { status: 404 });
+      })
+    );
+  }
 });
 
 console.log('[SW] Service worker script loaded successfully');

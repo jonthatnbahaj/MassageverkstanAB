@@ -1,0 +1,62 @@
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.3",
+  "body": [
+    {
+      "type": "Container",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Massageverkstan",
+          "weight": "Bolder",
+          "size": "Medium",
+          "color": "Accent"
+        },
+        {
+          "type": "TextBlock",
+          "text": "Boka din massage snabbt",
+          "wrap": true,
+          "size": "Small"
+        },
+        {
+          "type": "ColumnSet",
+          "columns": [
+            {
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                {
+                  "type": "ActionSet",
+                  "actions": [
+                    {
+                      "type": "Action.OpenUrl",
+                      "title": "Boka Ingmar",
+                      "url": "https://massageverkstann.netlify.app/?therapist=ingmar"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                {
+                  "type": "ActionSet",
+                  "actions": [
+                    {
+                      "type": "Action.OpenUrl",
+                      "title": "Boka Tobias",
+                      "url": "https://massageverkstann.netlify.app/?therapist=tobias"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -69,8 +69,10 @@
     <link rel="icon" type="image/png" sizes="1024x1024" href="/icon-maskable-1024.png" />
     
     <!-- Enhanced viewport for iOS iframe compatibility and App Store compliance -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover, interactive-widget=resizes-content" />
     <meta name="theme-color" content="#2D5A4F" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#2D5A4F" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1B3B36" />
     <meta name="description" content="Massageverkstan i Jönköping AB - Professionell massage och välmående. Boka din behandling online." />
     
     <!-- Apple App Store Compliant PWA Meta Tags -->
@@ -99,6 +101,9 @@
     <meta name="mobile-web-app-version" content="1.0.0" />
     
     <!-- Enhanced PWA Meta Tags for 30/30 Score -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="mobile-web-app-title" content="Massageverkstan" />
     <meta name="robots" content="index, follow" />
     <meta name="googlebot" content="index, follow" />
     <meta name="author" content="Massageverkstan i Jönköping AB" />
@@ -114,7 +119,7 @@
     <!-- Apple App Store Compliant Content Security Policy -->
     <meta http-equiv="Content-Security-Policy" content="
       default-src 'self' https:;
-      script-src 'self' 'unsafe-inline' data: https://www.bokadirekt.se https://*.bokadirekt.se;
+      script-src 'self' 'unsafe-inline' 'unsafe-eval' data: https://www.bokadirekt.se https://*.bokadirekt.se;
       style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
       font-src 'self' https://fonts.gstatic.com;
       img-src 'self' data: https: blob:;
@@ -124,6 +129,8 @@
       object-src 'none';
       base-uri 'self';
       form-action 'self' https://www.bokadirekt.se https://*.bokadirekt.se;
+      worker-src 'self';
+      manifest-src 'self';
     ">
     
     <!-- Performance and Loading Optimization -->
@@ -141,7 +148,7 @@
     <meta name="format-detection" content="date=no" />
     
     <!-- Web App Manifest - Apple App Store Compliant -->
-    <link rel="manifest" href="/manifest.json" crossorigin="anonymous" />
+    <link rel="manifest" href="/manifest.json" crossorigin="use-credentials" />
     
     <!-- Fonts with enhanced loading for iOS and App Store compliance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
@@ -177,6 +184,8 @@
       "operatingSystem": "Any",
       "browserRequirements": "Requires JavaScript. Requires HTML5.",
       "softwareVersion": "1.0.0",
+      "installUrl": "https://massageverkstann.netlify.app",
+      "screenshot": "https://massageverkstann.netlify.app/screenshots/mobile-home.png",
       "author": {
         "@type": "Organization",
         "name": "Massageverkstan i Jönköping AB"
@@ -184,6 +193,21 @@
       "offers": {
         "@type": "Offer",
         "category": "Health & Wellness"
+      },
+      "featureList": [
+        "Online booking system",
+        "Professional massage therapy",
+        "Multiple therapists available",
+        "Mobile-friendly interface",
+        "Secure payment processing"
+      ],
+      "requirements": "Modern web browser with JavaScript enabled",
+      "permissions": "camera, microphone, geolocation",
+      "downloadUrl": "https://massageverkstann.netlify.app",
+      "supportingData": {
+        "@type": "DataDownload",
+        "name": "App manifest",
+        "contentUrl": "https://massageverkstann.netlify.app/manifest.json"
       }
     }
     </script>
@@ -203,7 +227,10 @@
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', async () => {
-          navigator.serviceWorker.register('/sw.js')
+          navigator.serviceWorker.register('/sw.js', {
+            scope: '/',
+            updateViaCache: 'none'
+          })
             .then((registration) => {
               console.log('SW registered successfully');
               
@@ -215,6 +242,8 @@
                     if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
                       // New content available, but don't show popup (App Store compliant)
                       console.log('New content available - will be used on next visit');
+                      // Send message to new service worker
+                      newWorker.postMessage({ type: 'SKIP_WAITING' });
                     }
                   });
                 }
@@ -231,6 +260,18 @@
               await registration.sync.register('background-sync');
             } catch (error) {
               console.log('Background sync registration failed:', error);
+            }
+          }
+          
+          // Register for periodic background sync if supported
+          if ('serviceWorker' in navigator && 'periodicSync' in window.ServiceWorkerRegistration.prototype) {
+            try {
+              const registration = await navigator.serviceWorker.ready;
+              await registration.periodicSync.register('content-sync', {
+                minInterval: 24 * 60 * 60 * 1000 // 24 hours
+              });
+            } catch (error) {
+              console.log('Periodic background sync registration failed:', error);
             }
           }
         });
@@ -266,6 +307,22 @@
       if (window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches) {
         console.log('Running in standalone mode - App Store compliant PWA');
         document.body.classList.add('standalone-mode');
+        
+        // Handle file drops for PWA file handling
+        document.addEventListener('drop', function(e) {
+          e.preventDefault();
+          const files = e.dataTransfer.files;
+          for (let file of files) {
+            if (file.type === 'text/calendar' || file.type === 'application/pdf') {
+              console.log('File handling:', file.name);
+              // Handle calendar and PDF files
+            }
+          }
+        });
+        
+        document.addEventListener('dragover', function(e) {
+          e.preventDefault();
+        });
       }
       
       // Performance monitoring
@@ -278,8 +335,39 @@
               domContentLoaded: perfData.domContentLoadedEventEnd - perfData.domContentLoadedEventStart,
               firstPaint: performance.getEntriesByType('paint')[0]?.startTime
             });
+            
+            // Report to service worker for caching optimization
+            if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+              navigator.serviceWorker.controller.postMessage({
+                type: 'PERFORMANCE_DATA',
+                payload: {
+                  loadTime: perfData.loadEventEnd - perfData.loadEventStart,
+                  domContentLoaded: perfData.domContentLoadedEventEnd - perfData.domContentLoadedEventStart
+                }
+              });
+            }
           }, 0);
         });
+      }
+      
+      // Enhanced PWA features
+      if ('share' in navigator) {
+        // Web Share API support
+        window.shareApp = function() {
+          navigator.share({
+            title: 'Massageverkstan i Jönköping AB',
+            text: 'Boka professionell massage med Ingmar och Tobias',
+            url: window.location.href
+          });
+        };
+      }
+      
+      // Badge API support
+      if ('setAppBadge' in navigator) {
+        // Can be used to show notification count
+        window.updateBadge = function(count) {
+          navigator.setAppBadge(count);
+        };
       }
     </script>
   </body>

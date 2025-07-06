@@ -5,4 +5,11 @@
     "package_name": "se.massageverkstan.pwa",
     "sha256_cert_fingerprints": [""]
   }
+}, {
+  "relation": ["delegate_permission/common.get_login_creds"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "se.massageverkstan.pwa",
+    "sha256_cert_fingerprints": [""]
+  }
 }]

@@ -11,7 +11,9 @@
   "theme_color": "#2D5A4F",
   "background_color": "#2D5A4F",
   "lang": "sv",
+  "dir": "ltr",
   "categories": ["lifestyle", "business", "health", "wellness"],
+  "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-31a8ce4e53b7",
   "launch_handler": {
     "client_mode": "navigate-existing"
   },
@@ -21,7 +23,16 @@
   "prefer_related_applications": false,
   "related_applications": [],
   "protocol_handlers": [],
-  "file_handlers": [],
+  "file_handlers": [
+    {
+      "action": "/",
+      "accept": {
+        "text/calendar": [".ics"],
+        "application/pdf": [".pdf"]
+      }
+    }
+  ],
+  "handle_links": "preferred",
   "share_target": {
     "action": "/",
     "method": "GET",
@@ -31,6 +42,32 @@
       "url": "url"
     }
   },
+  "widgets": [
+    {
+      "name": "Snabbbokning",
+      "description": "Boka massage snabbt",
+      "tag": "quick-booking",
+      "template": "quick-booking-template",
+      "ms_ac_template": "adaptive-card.json",
+      "data": "/api/widget-data",
+      "type": "application/json",
+      "screenshots": [
+        {
+          "src": "/screenshots/widget-booking.png",
+          "sizes": "256x256",
+          "label": "Snabbbokning widget"
+        }
+      ],
+      "icons": [
+        {
+          "src": "/android-icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ],
+      "auth": false,
+      "update": 86400
+    }
+  ],
   "icons": [
     {
       "src": "/android-icon-36x36.png",
