@@ -1,0 +1,21 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [{
+      "appID": "TEAMID.se.massageverkstan.pwa",
+      "paths": ["*"],
+      "components": [
+        {
+          "/": "*",
+          "comment": "Matches all paths"
+        }
+      ]
+    }]
+  },
+  "webcredentials": {
+    "apps": ["TEAMID.se.massageverkstan.pwa"]
+  },
+  "appclips": {
+    "apps": ["TEAMID.se.massageverkstan.pwa.Clip"]
+  }
+}

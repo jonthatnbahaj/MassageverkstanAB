@@ -6,9 +6,28 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: 'autoUpdate',
+      registerType: 'prompt',
+      injectRegister: 'script',
+      strategies: 'injectManifest',
+      srcDir: 'public',
+      filename: 'sw.js',
+      devOptions: {
+        enabled: false,
+        type: 'module'
+      },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,jpeg,jpg}'],
+        globPatterns: [
+          '**/*.{js,css,html,ico,png,svg,jpeg,jpg,woff2,woff,ttf,eot,json}'
+        ],
+        globIgnores: [
+          '**/node_modules/**/*',
+          '**/sw.js',
+          '**/workbox-*.js'
+        ],
+        maximumFileSizeToCacheInBytes: 5000000,
+        cleanupOutdatedCaches: true,
+        skipWaiting: true,
+        clientsClaim: true,
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
@@ -16,7 +35,7 @@ export default defineConfig({
             options: {
               cacheName: 'google-fonts-cache',
               expiration: {
-                maxEntries: 10,
+                maxEntries: 20,
                 maxAgeSeconds: 60 * 60 * 24 * 365
               }
             }
@@ -27,7 +46,7 @@ export default defineConfig({
             options: {
               cacheName: 'gstatic-fonts-cache',
               expiration: {
-                maxEntries: 10,
+                maxEntries: 20,
                 maxAgeSeconds: 60 * 60 * 24 * 365
               }
             }
@@ -38,10 +57,13 @@ export default defineConfig({
             options: {
               cacheName: 'bokadirekt-cache',
               expiration: {
-                maxEntries: 20,
-                maxAgeSeconds: 60 * 60 * 24
+                maxEntries: 50,
+                maxAgeSeconds: 60 * 60 * 2
               },
-              networkTimeoutSeconds: 10
+              networkTimeoutSeconds: 8,
+              backgroundSync: {
+                name: 'bokadirekt-queue'
+              }
             }
           },
           {
@@ -50,393 +72,38 @@ export default defineConfig({
             options: {
               cacheName: 'images-cache',
               expiration: {
-                maxEntries: 100,
+                maxEntries: 200,
                 maxAgeSeconds: 60 * 60 * 24 * 30
               }
             }
           }
         ],
-        navigateFallback: '/index.html',
-        navigateFallbackDenylist: [
-          /^\/_/,
-          /\/[^/?]+\.[^/]+$/,
-          /^\/api\//,
-          /^\/offline\.html$/
-        ],
-        skipWaiting: true,
-        clientsClaim: true
+        navigateFallback: '/index.html'
       },
-      includeAssets: [
-        'favicon.ico',
-        'favicon-16x16.png',
-        'favicon-32x32.png', 
-        'favicon-96x96.png',
-        'favicon-152x152.png',
-        'favicon-512x512.png',
-        'favicon-1024x1024.png',
-        'apple-icon.png',
-        'apple-icon-precomposed.png',
-        'apple-icon-57x57.png',
-        'apple-icon-60x60.png',
-        'apple-icon-72x72.png',
-        'apple-icon-76x76.png',
-        'apple-icon-114x114.png',
-        'apple-icon-120x120.png',
-        'apple-icon-144x144.png',
-        'apple-icon-152x152.png',
-        'apple-icon-180x180.png',
-        'apple-icon-1024x1024.png',
-        'apple-touch-icon.png',
-        'apple-touch-icon-precomposed.png',
-        'apple-touch-icon-57x57.png',
-        'apple-touch-icon-60x60.png',
-        'apple-touch-icon-72x72.png',
-        'apple-touch-icon-76x76.png',
-        'apple-touch-icon-114x114.png',
-        'apple-touch-icon-120x120.png',
-        'apple-touch-icon-144x144.png',
-        'apple-touch-icon-152x152.png',
-        'apple-touch-icon-180x180.png',
-        'apple-touch-icon-512x512.png',
-        'apple-touch-icon-1024x1024.png',
-        'apple-touch-icon-167x167.png',
-        'apple-touch-icon-83.5x83.5.png',
-        'apple-touch-icon-40x40.png',
-        'apple-touch-icon-80x80.png',
-        'apple-touch-icon-58x58.png',
-        'apple-touch-icon-87x87.png',
-        'apple-touch-icon-29x29.png',
-        'apple-touch-icon-20x20.png',
-        'apple-touch-icon-1024x1024@2x.png',
-        'apple-touch-icon-512x512@2x.png',
-        'apple-touch-icon-256x256.png',
-        'apple-touch-icon-128x128.png',
-        'apple-touch-icon-64x64.png',
-        'apple-touch-icon-32x32.png',
-        'apple-touch-icon-16x16.png',
-        'android-icon-36x36.png',
-        'android-icon-48x48.png',
-        'android-icon-72x72.png',
-        'android-icon-96x96.png',
-        'android-icon-144x144.png',
-        'android-icon-192x192.png',
-        'ms-icon-70x70.png',
-        'ms-icon-144x144.png',
-        'ms-icon-150x150.png',
-        'ms-icon-310x310.png',
-        'offline.html',
-        'icon-maskable-96.png',
-        'icon-maskable-128.png',
-        'icon-maskable-144.png',
-        'icon-maskable-152.png',
-        'icon-maskable-192.png',
-        'icon-maskable-384.png',
-        'icon-maskable-512.png', 
-        'icon-maskable-1024.png',
-        'staff/*.png'
-      ],
-      manifest: {
-        name: 'Massageverkstan i Jönköping AB',
-        short_name: 'Massageverkstan',
-        description: 'Massageverkstan i Jönköping AB - Professionell massage och välmående. Boka din behandling online med Ingmar och Tobias.',
-        theme_color: '#2D5A4F',
-        background_color: '#2D5A4F',
-        display: 'standalone',
-        orientation: 'portrait-primary',
-        scope: '/',
-        start_url: '/',
-        lang: 'sv',
-        categories: ['health', 'wellness', 'lifestyle', 'medical', 'business'],
-        icons: [
-          // Standard favicon sizes
-          {
-            src: '/favicon-16x16.png',
-            sizes: '16x16',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: '/favicon-32x32.png',
-            sizes: '32x32',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: '/favicon-96x96.png',
-            sizes: '96x96',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: '/favicon-152x152.png',
-            sizes: '152x152',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: '/favicon-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: '/favicon-1024x1024.png',
-            sizes: '1024x1024',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          // Enhanced maskable icons for Apple Store compliance
-          {
-            src: '/favicon-152x152.png',
-            sizes: '152x152',
-            type: 'image/png',
-            purpose: 'maskable'
-          },
-          {
-            src: '/favicon-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'maskable'
-          },
-          {
-            src: '/favicon-1024x1024.png',
-            sizes: '1024x1024',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          // Android Chrome icons
-          {
-            src: '/android-icon-36x36.png',
-            sizes: '36x36',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: '/android-icon-48x48.png',
-            sizes: '48x48',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: '/android-icon-72x72.png',
-            sizes: '72x72',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: '/android-icon-96x96.png',
-            sizes: '96x96',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: '/android-icon-144x144.png',
-            sizes: '144x144',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: '/android-icon-192x192.png',
-            sizes: '192x192',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          // Apple Touch Icons
-          {
-            src: '/apple-icon-57x57.png',
-            sizes: '57x57',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: '/apple-icon-60x60.png',
-            sizes: '60x60',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: '/apple-icon-72x72.png',
-            sizes: '72x72',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: '/apple-icon-76x76.png',
-            sizes: '76x76',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: '/apple-icon-114x114.png',
-            sizes: '114x114',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: '/apple-icon-120x120.png',
-            sizes: '120x120',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: '/apple-icon-144x144.png',
-            sizes: '144x144',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: '/apple-icon-152x152.png',
-            sizes: '152x152',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: '/apple-icon-180x180.png',
-            sizes: '180x180',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: '/apple-icon-1024x1024.png',
-            sizes: '1024x1024',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          // Microsoft Icons
-          {
-            src: '/ms-icon-70x70.png',
-            sizes: '70x70',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: '/ms-icon-144x144.png',
-            sizes: '144x144',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: '/ms-icon-150x150.png',
-            sizes: '150x150',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: '/ms-icon-310x310.png',
-            sizes: '310x310',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          // Maskable icons for adaptive icons
-          {
-            src: '/icon-maskable-96.png',
-            sizes: '96x96',
-            type: 'image/png',
-            purpose: 'maskable'
-          },
-          {
-            src: '/icon-maskable-128.png',
-            sizes: '128x128',
-            type: 'image/png',
-            purpose: 'maskable'
-          },
-          {
-            src: '/icon-maskable-144.png',
-            sizes: '144x144',
-            type: 'image/png',
-            purpose: 'maskable'
-          },
-          {
-            src: '/icon-maskable-152.png',
-            sizes: '152x152',
-            type: 'image/png',
-            purpose: 'maskable'
-          },
-          {
-            src: '/icon-maskable-192.png',
-            sizes: '192x192',
-            type: 'image/png',
-            purpose: 'maskable'
-          },
-          {
-            src: '/icon-maskable-384.png',
-            sizes: '384x384',
-            type: 'image/png',
-            purpose: 'maskable'
-          },
-          {
-            src: '/icon-maskable-512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'maskable'
-          },
-          {
-            src: '/icon-maskable-1024.png',
-            sizes: '1024x1024',
-            type: 'image/png',
-            purpose: 'maskable'
-          }
-        ],
-        shortcuts: [
-          {
-            name: 'Boka behandling',
-            short_name: 'Boka',
-            description: 'Boka din behandling hos Massageverkstan',
-            url: '/',
-            icons: [
-              {
-                src: '/apple-icon-96x96.png',
-                sizes: '96x96',
-                type: 'image/png'
-              }
-            ]
-          },
-          {
-            name: 'Om oss', 
-            short_name: 'Om oss',
-            description: 'Läs mer om Massageverkstan',
-            url: '/om-oss',
-            icons: [
-              {
-                src: '/apple-icon-96x96.png',
-                sizes: '96x96',
-                type: 'image/png'
-              }
-            ]
-          }
-        ],
-        prefer_related_applications: false,
-        related_applications: [],
-        display_override: ["window-controls-overlay", "standalone"],
-        protocol_handlers: [],
-        file_handlers: [],
-        share_target: {
-          action: "/",
-          method: "GET",
-          params: {
-            title: "title",
-            text: "text",
-            url: "url"
-          }
-        },
-        edge_side_panel: {
-          preferred_width: 400
-        }
-      },
-      devOptions: {
-        enabled: false
-      },
-      injectRegister: 'script',
-      strategies: 'generateSW'
+      manifest: false // Use our custom manifest.json
     })
   ],
   optimizeDeps: {
-    exclude: ['lucide-react']
+    exclude: ['lucide-react'],
+    include: ['react', 'react-dom', 'framer-motion']
   },
   build: {
-    target: 'esnext',
+    target: ['es2020', 'edge88', 'firefox78', 'chrome87', 'safari13.1'],
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true
+      }
+    },
+    cssCodeSplit: true,
+    sourcemap: false,
+    assetsInlineLimit: 4096,
     rollupOptions: {
       output: {
+        chunkFileNames: 'assets/[name]-[hash].js',
+        entryFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]',
         manualChunks: {
           vendor: ['react', 'react-dom'],
           router: ['react-router-dom'],
