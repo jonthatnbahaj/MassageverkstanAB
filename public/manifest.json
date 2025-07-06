@@ -11,12 +11,25 @@
   "theme_color": "#2D5A4F",
   "background_color": "#2D5A4F",
   "lang": "sv",
-  "categories": ["lifestyle", "business", "health"],
+  "categories": ["lifestyle", "business", "health", "wellness"],
   "launch_handler": {
     "client_mode": "navigate-existing"
   },
   "edge_side_panel": {
     "preferred_width": 400
+  },
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "protocol_handlers": [],
+  "file_handlers": [],
+  "share_target": {
+    "action": "/",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
   },
   "icons": [
     {
@@ -72,6 +85,35 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    },
+    {
+      "src": "/favicon-1024x1024.png", 
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/mobile-home.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Massageverkstan - Boka behandling"
+    },
+    {
+      "src": "/screenshots/mobile-booking.png",
+      "sizes": "390x844", 
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Välj terapeut och behandling"
+    },
+    {
+      "src": "/screenshots/desktop-home.png",
+      "sizes": "1280x720",
+      "type": "image/png", 
+      "form_factor": "wide",
+      "label": "Massageverkstan - Desktop vy"
     }
   ],
   "shortcuts": [

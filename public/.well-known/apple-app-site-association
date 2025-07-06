@@ -1,0 +1,12 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [{
+      "appID": "TEAMID.se.massageverkstan.pwa",
+      "paths": ["*"]
+    }]
+  },
+  "webcredentials": {
+    "apps": ["TEAMID.se.massageverkstan.pwa"]
+  }
+}

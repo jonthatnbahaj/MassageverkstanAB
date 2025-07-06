@@ -9,6 +9,7 @@ import { businessConfig } from '../config/business';
 const MainPage: React.FC = () => {
   const location = useLocation();
   const [activeTab, setActiveTab] = useState<'boka' | 'info'>('boka');
+  const [isLoading, setIsLoading] = useState(true);
 
   // Check for navigation state to set the correct tab
   useEffect(() => {
@@ -18,9 +19,35 @@ const MainPage: React.FC = () => {
       // Clear the state to prevent issues on refresh
       window.history.replaceState({}, document.title);
     }
+    
+    // Simulate loading for smooth UX
+    const timer = setTimeout(() => setIsLoading(false), 100);
+    return () => clearTimeout(timer);
   }, [location.state]);
 
+  // Preload critical resources
+  useEffect(() => {
+    const preloadImages = [
+      businessConfig.logo,
+      '/staff/Ingmar.png',
+      '/staff/Tobias.png'
+    ];
+    
+    preloadImages.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
+
   const renderContent = () => {
+    if (isLoading) {
+      return (
+        <div className="flex items-center justify-center min-h-[50vh]">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-primary"></div>
+        </div>
+      );
+    }
+    
     switch (activeTab) {
       case 'boka':
         return <BookingView />;

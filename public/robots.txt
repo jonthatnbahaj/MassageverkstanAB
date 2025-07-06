@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://massageverkstan.netlify.app/sitemap.xml
+
+# Specific rules for better SEO
+Allow: /om-oss
+Allow: /integritetspolicy
+Allow: /anvandarvillkor
+
+# Block unnecessary crawling
+Disallow: /api/
+Disallow: /_redirects
+Disallow: /sw.js
+Disallow: /offline.html
+
+# Crawl delay for better server performance
+Crawl-delay: 1
