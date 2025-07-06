@@ -4,27 +4,6 @@
 const CACHE_NAME = 'massageverkstan-pwa-v2.0.0';
 const OFFLINE_URL = '/offline.html';
 
-// Critical app shell resources for instant loading
-const APP_SHELL = [
-  '/',
-  '/index.html',
-  '/offline.html',
-  '/manifest.json'
-];
-
-// Enhanced precache strategy for maximum performance
-const PRECACHE_RESOURCES = [
-  ...APP_SHELL,
-  // Core assets
-  '/favicon-192x192.png',
-  '/favicon-512x512.png',
-  '/android-icon-192x192.png',
-  '/logo.png',
-  // Staff images
-  '/staff/Ingmar.png',
-  '/staff/Tobias.png'
-];
-
 // Install event - aggressive caching for performance
 self.addEventListener('install', (event) => {
   console.log('[SW] Installing service worker...');
@@ -35,8 +14,8 @@ self.addEventListener('install', (event) => {
         const cache = await caches.open(CACHE_NAME);
         console.log('[SW] Caching app shell and critical resources...');
         
-        // Cache critical resources first
-        await cache.addAll(PRECACHE_RESOURCES);
+        // Cache resources from Workbox manifest
+        await cache.addAll(self.__WB_MANIFEST);
         
         // Force immediate activation
         await self.skipWaiting();
